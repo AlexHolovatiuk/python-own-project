@@ -1,14 +1,16 @@
 {% extends "layout.html" %}
 
-{% block mein%}
+{% block main %}
         <!-- end header -->
 <section id="banner">
 
     <!-- Slider -->
     <div id="main-slider" class="flexslider">
+        <input type="radio" name="flexslider" id="slider1" checked>
+        <input type="radio" name="flexslider" id="slider2">
         <ul class="slides">
             <li>
-                <img src="img/slides/1.jpg" alt="" />
+                <img src="{{ url_for('static', filename='img/slides/1.jpg') }}" alt="" />
                 <div class="flex-caption container">
                     <h3>Smart Learning..</h3>
                     <p>Doloribus omnis minus temporibus perferendis ipsa<br /> architecto non, magni quam</p>
@@ -16,7 +18,7 @@
                 </div>
             </li>
             <li>
-                <img src="img/slides/2.jpg" alt="" />
+                <img src="{{ url_for('static', filename='img/slides/2.jpg') }}" alt="" />
                 <div class="flex-caption container">
                     <h3>Best Educational Campus..</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing<br /> elitincidunt eius magni
@@ -25,6 +27,10 @@
                 </div>
             </li>
         </ul>
+        <div class="radio-label">
+             <label for="slider1"></label>
+             <label for="slider2"></label>
+        </div>
     </div>
     <!-- end slider -->
 
