@@ -1,10 +1,13 @@
 from crypt import methods
+from email.policy import default
 from pyexpat.errors import messages
 
 from flask import Flask, session, request, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash
 import os
+from datetime import datetime
+
 
 SESSION_USER_ID = 'user_id'
 app = Flask(__name__)
@@ -21,11 +24,22 @@ class User(db.Model):
     password = db.Column(db.String(25), nullable=False)
     role = db.Column(db.Integer(), default=0, nullable=False)
 
+
     def __repr__(self):
         return f'<User: {self.username}>'
 
     def check_password(self, password):
         return check_password_hash(self.password,password)
+
+
+class News(db.Model):
+    __teblename__ = 'News'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    image = db.Column(db.String(255), nullable=False)
+    text = db.Column(db.Text(), nullable=False)
+    created_on = db.Column(db.Date(), default=datetime.utcnow())
+    deleted = db.Column(db.Boolean, default=False)
 
 
 with app.app_context():
@@ -37,9 +51,16 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
+@app.route('/news')
+def news():
+    page = request.args.get('page', 1, type=int)
+    list_news = News.query.paginate(page=page, per_page=6)
+
+    for item in list_news:
+        if len(item.text) > 200:
+            item.text = item.text[:200] + '...'
+
+    return render_template('news.html', list_news=list_news)
 
 
 @app.route('/contact')

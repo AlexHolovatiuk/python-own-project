@@ -16,7 +16,7 @@
             <div class="col-md-6 col-md-offset-3">
                 <p>{{ message }}</p>
                 <div class="contact-form">
-                    <form method="post" action="contact.php" id="contactform" class="contact">
+                    <form method="post" action="{{url_for('login')}}" id="contactform" class="contact">
                         <div class="form-group has-feedback">
                             <label for="email">Введіть Email</label>
                             <input type="email" class="form-control" name="email" placeholder="" required>
