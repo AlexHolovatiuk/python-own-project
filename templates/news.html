@@ -16,9 +16,18 @@
         <div class="row service-v1 margin-bottom-40">
             {% for item in list_news %}
             <div class="col-md-4 md-margin-bottom-40">
-                <img class="img-responsive" src="{{item.image}}" alt="">
-                <h2>{{item.name}}</h2>
+                <a href="/news/{{item.id}}">
+                    <img class="img-responsive" src="{{item.image}}" alt="">
+                </a>
+                <a href="/news/{{item.id}}">
+                    <h2>{{item.name}}</h2>
+                </a>
                 <p>{{item.text}}</p>
+                {% if user_id %}
+                <a href="/edit_news/{{item.id}}">
+                    <button>Редагувати новину</button>
+                </a>
+                {% endif %}
             </div>
             {% if loop.index % 3 == 0 %}
             <div style="clear:both;"></div>
